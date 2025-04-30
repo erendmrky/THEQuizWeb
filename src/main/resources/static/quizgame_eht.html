@@ -4,16 +4,52 @@
     <meta charset="UTF-8">
     <title>QuizGame_EHT</title>
     <style>
-        /* your existing styles… */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: cyan;
+            font-family: sans-serif;
+            text-align: center;
+        }
+        .site-title {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 4rem;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .login-container input {
+            display: block;
+            width: 320px; max-width: 90%;
+            padding: 10px;
+            margin: 0 auto 15px;
+            border: 1px solid #ccc; border-radius: 4px;
+            background: #fff; font-size: 1rem;
+        }
+        .signup-text { font-size: .9rem; margin-top: 10px; }
+        .signup-text a { color: #FF4500; font-weight: bold; text-decoration: none; }
+        .login-button {
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: #fff; font-size: 1rem; font-weight: bold;
+            border: none; border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #loginMessage { margin-top: 1em; color: red; }
     </style>
 </head>
 <body>
 <div class="login-container">
     <h1 class="site-title">QUIZ GAME EHT</h1>
-    <input id="loginEmail"    type="email"     placeholder="Email Address">
-    <input id="loginPassword" type="password" placeholder="Password">
+    <input id="loginEmail"    type="email"    placeholder="Mail Adresiniz">
+    <input id="loginPassword" type="password" placeholder="Şifreniz">
     <button id="loginButton" class="login-button">Giriş Yap</button>
-    <p id="loginMessage" style="margin-top:1em;color:red"></p>
+    <p id="loginMessage"></p>
     <p class="signup-text">
         Hesabın yok mu? Hemen <a href="register_quizgame_eht.html">kaydol</a>
     </p>
@@ -24,24 +60,26 @@
         e.preventDefault();
         const email    = document.getElementById('loginEmail').value;
         const password = document.getElementById('loginPassword').value;
-        console.log('Trying login with:', { email, password });
+        const msgEl    = document.getElementById('loginMessage');
 
-        const res = await fetch('/api/users/login', {
-            method: 'POST',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify({email, password})
-        });
-        console.log('Status:', res.status);
-        const text = await res.text();
-        console.log('Response body:', text);
+        try {
+            const res  = await fetch('/api/users/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const text = await res.text();
 
-        if (res.ok && text.toLowerCase().includes('success')) {
-            window.location.href = 'room_quizgame_eht.html';
-        } else {
-            document.getElementById('loginMessage').textContent = text;
+            if (res.ok && text.toLowerCase().includes('success')) {
+                window.location.href = 'room_quizgame_eht.html';
+            } else {
+                msgEl.textContent = text;
+            }
+        } catch (err) {
+            msgEl.textContent = 'Ağ hatası';
+            console.error(err);
         }
     });
 </script>
-
 </body>
 </html>

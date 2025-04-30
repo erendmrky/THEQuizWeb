@@ -4,7 +4,40 @@
     <meta charset="UTF-8">
     <title>Kaydol – QuizGame_EHT</title>
     <style>
-        /* your existing styles… */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: cyan;
+            font-family: sans-serif;
+            text-align: center;
+        }
+        .site-title { /* reuse if needed */ }
+        .signup-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: black;
+        }
+        .signup-container input {
+            display: block;
+            width: 320px; max-width: 90%;
+            padding: 10px;
+            margin: 0 auto 15px;
+            border: 1px solid #ccc; border-radius: 4px;
+            background: #fff; font-size: 1rem; color: #333;
+        }
+        .signup-container input::placeholder { color: #666; }
+        .signup-button {
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: #fff; font-size: 1rem; font-weight: bold;
+            border: none; border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #regMessage { margin-top: 1em; color: red; }
     </style>
 </head>
 <body>
@@ -14,7 +47,7 @@
     <input id="regUsername" type="text"     placeholder="Kullanıcı Adı">
     <input id="regPassword" type="password" placeholder="Şifre">
     <button id="signupButton" class="signup-button">Kaydol</button>
-    <p id="regMessage" style="margin-top:1em;color:red"></p>
+    <p id="regMessage"></p>
 </div>
 
 <script>
