@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>QuizGame_EHT</title>
+    <style>
+        /* your existing styles… */
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1 class="site-title">QUIZ GAME EHT</h1>
+    <input id="loginEmail"    type="email"     placeholder="Email Address">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button id="loginButton" class="login-button">Giriş Yap</button>
+    <p id="loginMessage" style="margin-top:1em;color:red"></p>
+    <p class="signup-text">
+        Hesabın yok mu? Hemen <a href="register_quizgame_eht.html">kaydol</a>
+    </p>
+</div>
+
+<script>
+    document.getElementById('loginButton').addEventListener('click', async e => {
+        e.preventDefault();
+        const email    = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        console.log('Trying login with:', { email, password });
+
+        const res = await fetch('/api/users/login', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({email, password})
+        });
+        console.log('Status:', res.status);
+        const text = await res.text();
+        console.log('Response body:', text);
+
+        if (res.ok && text.toLowerCase().includes('success')) {
+            window.location.href = 'room_quizgame_eht.html';
+        } else {
+            document.getElementById('loginMessage').textContent = text;
+        }
+    });
+</script>
+
+</body>
+</html>
