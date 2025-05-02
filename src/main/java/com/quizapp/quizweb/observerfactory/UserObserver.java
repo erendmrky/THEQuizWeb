@@ -22,7 +22,7 @@ public class UserObserver implements Observer {
         message.setText("Hello user "+ user.getUsername()+",\n\n" +
                 "New Questions added for topic: " + topicName+" \n" +"Log in now and solve the new questions: http://localhost:8080/views/Signin_StajHazir.html"+"\n"+
                 "We wish you Good Luck"+ "\n\n"+
-                "Team StajHazir");
+                "Team THE");
         mailSender.send(message);
     }
 }
