@@ -9,6 +9,7 @@ import com.quizapp.quizweb.observerfactory.UserObserver;
 import com.quizapp.quizweb.repository.QuizRepository;
 import com.quizapp.quizweb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class QuizService {
     private QuizNotifier quizNotifier;
 
     @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
     private UserRepository userRepository;
 
     public String createQuiz(String topicName, List <Question> questions) {
@@ -33,12 +37,29 @@ public class QuizService {
 
         List<User> allUsers = userRepository.findAll();
         for (User user : allUsers) {
-            UserObserver observer = new UserObserver(user);
-            observer.update(topicName); // prints message
+            UserObserver observer = new UserObserver(user,mailSender);
+            observer.update(topicName);
         }
 
 
         return "Quiz created and users have been notified!";
+    }
+
+    public String createQuestions(int id, List<Question> questions) {
+        Quiz quiz = quizRepository.findById(id).get();
+
+        for(Question question : questions) {
+            question.setQuiz(quiz);
+        }
+        quiz.getQuestions().addAll(questions);
+        quizRepository.save(quiz);
+
+        List<User> allUsers = userRepository.findAll();
+        for (User user : allUsers) {
+            UserObserver observer = new UserObserver(user,mailSender);
+            observer.update(quiz.getTopic());
+        }
+        return "Questions created for existing topic and users have been notified!";
     }
 
     public List<String> getAllQuizTopics() {

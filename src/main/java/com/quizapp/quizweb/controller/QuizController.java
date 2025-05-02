@@ -21,6 +21,11 @@ public class QuizController {
         return quizService.createQuiz(topicName,questions);
     }
 
+    @PutMapping("topic/{id}/newquestions")
+    public String createQuestions(@PathVariable int id, @RequestBody List<Question> questions) {
+        return quizService.createQuestions(id,questions);
+    }
+
     @GetMapping("/topics")
     public List<String> getAllQuizTopics() {
         return quizService.getAllQuizTopics();

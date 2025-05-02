@@ -5,6 +5,7 @@ import com.quizapp.quizweb.observerfactory.QuizNotifier;
 import com.quizapp.quizweb.observerfactory.UserObserver;
 import com.quizapp.quizweb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -18,6 +19,8 @@ public class UserService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     @Autowired
     private QuizNotifier quizNotifier;
+    @Autowired
+    private JavaMailSender mailSender;
 
     public String registerUser(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -26,7 +29,7 @@ public class UserService {
         user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
 
-        UserObserver userObserver = new UserObserver(user);
+        UserObserver userObserver = new UserObserver(user,mailSender);
         quizNotifier.registerObserver(userObserver);
 
         return "User Registered Successfully";
