@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signin_StajHazir</title>
+  <style>
+    body { margin: 0; padding: 0; background: #000; height: 100vh; overflow: hidden; font-family: Arial, sans-serif; color: #fff; }
+    .lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    .line { position: absolute; width: 2px; background: transparent; }
+    .line:nth-child(1){ left: 20%; height: 100%; }
+    .line:nth-child(2){ left: 40%; height: 100%; }
+    .line:nth-child(3){ left: 60%; height: 100%; }
+    .line:nth-child(4){ left: 78%; top: 5%; height: 90%; background: #fff; }
+
+    .img1 { position: absolute; left: 81.4%; top: 14%; transform: translate(-50%,-50%) rotate(-15deg); width: 3.2%; filter: grayscale(100%) brightness(0) invert(1); }
+    .img2 { position: absolute; left: 84%; top: 5.2%; transform: rotate(15deg); width: 3.6%; filter: invert(1); }
+    .img3 { position: absolute; left: 85.5%; top: 13.2%; transform: rotate(10deg); width: 4%; filter: invert(1); }
+    .img4 { position: absolute; left: 90%; top: 6%; transform: rotate(-7deg); width: 4%; filter: invert(1); }
+    .img5 { position: absolute; left: 94%; top: 13.5%; transform: rotate(9deg); width: 3.7%; filter: invert(1); }
+    .img7 { position: absolute; left: 7.5%; top: 12.2%; width: 38%; }
+
+    .info-text {
+      position: absolute;
+      left: 49.5%;
+      top: 23.2%;
+      width: 38%;
+      max-width: 500px;
+      color: white;
+      font-size: 1.55rem;
+      line-height: 1.4;
+      padding-right: 1rem;
+      word-wrap: break-word;
+    }
+
+    .info-text .title {
+      color: #9c27b0;
+      font-weight: bold;
+      font-style: italic;
+      border-bottom: 2px solid #9c27b0;
+      line-height: 1;
+    }
+
+    .info-text .underline {
+      display: inline-block;
+      border-bottom: 2px solid white;
+      padding-bottom: 0;
+      line-height: 1;
+    }
+
+    .segment-right { position: absolute; top: 4%; right: 0; width: 20%; padding-top: 10%; padding-left: 5%; }
+    .login-container { width: 90%; }
+    .login-container h2 { font-size: 2rem; margin-bottom: 1.5rem; line-height: 1.2; }
+    .input-group { position: relative; width: 100%; margin-bottom: 1rem; }
+    .input-group input { width: 90%; padding: 0.5rem 2.5rem 0.5rem 0; background: transparent; border: none; border-bottom: 1px solid #fff; color: #fff; font-size: 0.9rem; }
+    .input-group input::placeholder { color: #ccc; }
+    .input-group input:focus,
+    input:-webkit-autofill { box-shadow: 0 0 0px 1000px #000 inset !important; -webkit-text-fill-color: #fff !important; outline: none; }
+    .img6 { position: absolute; top: 50%; right: 0.5rem; width: 1.3rem; transform: translateY(-50%); cursor: pointer; filter: invert(1); }
+    .login-container button { width: 100%; padding: 0.75rem; margin-top: 0.5rem; border: none; border-radius: 4px; background: #8e44ad; color: #fff; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+    .login-container .footer { margin-top: 2rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 4px; font-size: 0.8rem; text-align: center; width: 100%; box-sizing: border-box; }
+    .login-container .footer a { color: #9c27b0; text-decoration: none; font-weight: bold; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="lines">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+  </div>
+  <img src="../images/2250206.png" alt="Envelope" class="img1">
+  <img src="../images/Gear.png" alt="Gear" class="img2">
+  <img src="../images/Internship.png" alt="Internship" class="img3">
+  <img src="../images/Report.png" alt="Report" class="img4">
+  <img src="../images/book.png" alt="Book" class="img5">
+  <img src="../images/Apti.png" alt="Apti" class="img7">
+
+  <div class="info-text">
+    <p><span class="title">Aptitude Test</span> is an assessment used to measure a person's natural ability to learn or perform in specific areas or tasks. It typically consists of four sections:</p>
+    <p><strong><span class="underline">Verbal</span>:</strong> Assesses language, grammar, and reading comprehension skills.</p>
+    <p><strong><span class="underline">Non-verbal</span>:</strong> Tests visual reasoning through patterns, shapes, and diagrams.</p>
+    <p><strong><span class="underline">Numerical</span>:</strong> Measures ability to work with numbers and solve mathematical problems.</p>
+    <p><strong><span class="underline">Mechanical</span>:</strong> Evaluates understanding of mechanical concepts and physical principles.</p>
+  </div>
+
+  <div class="segment-right">
+    <div class="login-container" id="login-container">
+      <h2>Sign in to continue your preparation journey</h2>
+      <form id="login-form">
+        <div class="input-group">
+          <input type="email" id="login-email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="login-password" name="password" placeholder="Password" required>
+          <img src="../images/Eye.png" alt="Toggle Password" id="toggleLoginPass" class="img6">
+        </div>
+        <button type="submit">Sign In</button>
+      </form>
+      <p class="footer">Don't have an account? <a id="show-signup">Sign Up</a></p>
+    </div>
+
+    <div class="login-container" id="signup-container" style="display:none;">
+      <h2>Create your account</h2>
+      <form id="signup-form">
+        <div class="input-group">
+          <input type="text" id="signup-username" name="username" placeholder="Username" required>
+        </div>
+        <div class="input-group">
+          <input type="email" id="signup-email" name="email" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="signup-password" name="password" placeholder="Password" required>
+          <img src="../images/Eye.png" alt="Toggle Password" id="toggleSignupPass" class="img6">
+        </div>
+        <div class="input-group">
+          <input type="password" id="signup-confirm" name="confirm_password" placeholder="Confirm Password" required>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+      <p class="footer">Already have an account? <a id="show-login">Sign In</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('show-signup').addEventListener('click', () => {
+      document.getElementById('login-container').style.display = 'none';
+      document.getElementById('signup-container').style.display = 'block';
+    });
+    document.getElementById('show-login').addEventListener('click', () => {
+      document.getElementById('signup-container').style.display = 'none';
+      document.getElementById('login-container').style.display = 'block';
+    });
+
+    document.getElementById('toggleLoginPass').addEventListener('click', () => {
+      const f = document.getElementById('login-password');
+      f.type = f.type === 'password' ? 'text' : 'password';
+    });
+    document.getElementById('toggleSignupPass').addEventListener('click', () => {
+      ['signup-password','signup-confirm'].forEach(id => {
+        const f = document.getElementById(id);
+        f.type = f.type === 'password' ? 'text' : 'password';
+      });
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      if (!email || !password) {
+        alert('Please fill all fields');
+        return;
+      }
+      try {
+        const res = await fetch('/api/users/login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({email, password})
+        });
+        const text = await res.text();
+
+        if (res.ok && text.toLowerCase().includes('success')) {
+          window.location.href = 'StajHazir.html';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const username = document.getElementById('signup-username').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const cpw = document.getElementById('signup-confirm').value;
+      if (!username || !email || !password || !cpw) {
+        alert('Please fill all fields');
+        return;
+      }
+      if (password !== cpw) {
+        alert('Passwords do not match');
+        return;
+      }
+      try {
+        const res = await fetch('/api/users/register', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({email, username, password})
+        });
+        const text = await res.text();
+        if (res.ok) {
+          setTimeout(() => window.location.href = 'Signin_StajHazir.html', 1500);
+        } else {
+        }
+      } catch (err) {
+        console.error(err);
+      }
+      alert('Account created! Please sign in.');
+      document.getElementById('signup-container').style.display = 'none';
+      document.getElementById('login-container').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
