@@ -16,4 +16,9 @@ public class User {
     private String password;
     @Column(unique=true)
     private String username;
+    private float numericalBestScore;
+    private float verbalBestScore;
+    private float nonverbalBestScore;
+    private float mechanicalBestScore;
+    private float bestTotalScore;
 }

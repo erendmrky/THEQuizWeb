@@ -24,4 +24,8 @@ public class UserController {
         String password = body.get("password");
         return userService.loginUser(email, password);
     }
+    @GetMapping("/{email}/BestScore")
+    public float getBestScore(@PathVariable String email) {
+        return userService.getBestScore(email);
+    }
 }

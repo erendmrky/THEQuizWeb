@@ -40,4 +40,12 @@ public class UserService {
         }
         return "Wrong email or password";
     }
+
+    public float getBestScore(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            return user.get().getMechanicalBestScore() + user.get().getNonverbalBestScore() + user.get().getVerbalBestScore() + user.get().getNumericalBestScore();
+        }
+        return 0;
+    }
 }
