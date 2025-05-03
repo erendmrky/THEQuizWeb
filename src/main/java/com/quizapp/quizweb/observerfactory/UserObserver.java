@@ -3,7 +3,6 @@ package com.quizapp.quizweb.observerfactory;
 import com.quizapp.quizweb.model.User;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 public class UserObserver implements Observer {
     private final User user;

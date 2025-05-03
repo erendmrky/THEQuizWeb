@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -32,8 +33,12 @@ public class QuizController {
     }
 
     @GetMapping("/topic/{id}")
-    public Optional<Quiz> getQuizTopicById(@PathVariable int id) {
+    public List<Question> getQuizTopicById(@PathVariable int id) {
         return quizService.getQuizTopicById(id);
     }
 
+    @PostMapping("/topic/{id}/submit")
+    public float submitQuestion(@PathVariable int id, @RequestParam int userId, @RequestBody Map<Integer, String> answers) {
+        return quizService.calculateScoreForTopic(id,userId,answers);
+    }
 }

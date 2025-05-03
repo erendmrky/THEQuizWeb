@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class QuizService {
@@ -66,11 +64,61 @@ public class QuizService {
         List<Quiz> quizzes = quizRepository.findAll();
         return quizzes.stream()
                 .map(Quiz::getTopic)
-                .toList(); // Java 16+ (or use .collect(Collectors.toList()))
+                .toList();
     }
 
 
-    public Optional<Quiz> getQuizTopicById(int id) {
-        return quizRepository.findById(id);
+    public List<Question> getQuizTopicById(int id) {
+        Quiz quiz = quizRepository.findById(id).get();
+
+        List<Question> shuffledQuestions = quiz.getQuestions();
+        Collections.shuffle(shuffledQuestions);
+        return shuffledQuestions;
+    }
+
+    public float calculateScoreForTopic(int quizId, int userId, Map<Integer, String> answers) {
+        Quiz quiz = quizRepository.findById(quizId).get();
+        User user = userRepository.findById(userId).get();
+        List<Question> questions = quiz.getQuestions();
+
+        int correctAnswers = 0;
+        for (Question question : quiz.getQuestions()) {
+            String userAnswer = answers.get(question.getId());
+            if(userAnswer == null) {
+                break;
+            }
+            if(question.getCorrectOption().equals(userAnswer)) {
+                correctAnswers++;
+            }
+            else {
+                break;
+            }
+        }
+        switch (quizId){
+            case 7:
+                System.out.println("Quiz 7 IM INNNNNNN");
+                if(user.getNumericalBestScore() < correctAnswers) {
+                    System.out.println("Numerical best score değişti");
+                    user.setNumericalBestScore(correctAnswers);
+                }
+                break;
+            case 2:
+                if(user.getVerbalBestScore() < correctAnswers) {
+                    user.setVerbalBestScore(correctAnswers);
+                }
+                break;
+            case 3:
+                if(user.getNonverbalBestScore() < correctAnswers) {
+                    user.setNonverbalBestScore(correctAnswers);
+                }
+                break;
+            case 4:
+                if(user.getMechanicalBestScore() < correctAnswers) {
+                    user.setMechanicalBestScore(correctAnswers);
+                }
+                break;
+        }
+        userRepository.save(user);
+        return correctAnswers;
     }
 }
