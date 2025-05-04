@@ -32,14 +32,11 @@ public class QuizService {
     public String createQuiz(String topicName, List <Question> questions) {
         Quiz quiz = QuizFactory.createQuiz(topicName,questions);
         quizRepository.save(quiz);
-
         List<User> allUsers = userRepository.findAll();
         for (User user : allUsers) {
             UserObserver observer = new UserObserver(user,mailSender);
             observer.update(topicName);
         }
-
-
         return "Quiz created and users have been notified!";
     }
 
@@ -55,18 +52,10 @@ public class QuizService {
         List<User> allUsers = userRepository.findAll();
         for (User user : allUsers) {
             UserObserver observer = new UserObserver(user,mailSender);
-            observer.update(quiz.getTopic());
+            quizNotifier.notifyObservers(quiz.getTopic());
         }
         return "Questions created for existing topic and users have been notified!";
     }
-
-    public List<String> getAllQuizTopics() {
-        List<Quiz> quizzes = quizRepository.findAll();
-        return quizzes.stream()
-                .map(Quiz::getTopic)
-                .toList();
-    }
-
 
     public List<Question> getQuizTopicById(int id) {
         Quiz quiz = quizRepository.findById(id).get();
@@ -76,29 +65,29 @@ public class QuizService {
         return shuffledQuestions;
     }
 
-    public float calculateScoreForTopic(int quizId, int userId, Map<Integer, String> answers) {
-        Quiz quiz = quizRepository.findById(quizId).get();
+    public int calculateScoreForTopic(int quizId, int userId, Map<Integer, String> answers) {
         User user = userRepository.findById(userId).get();
-        List<Question> questions = quiz.getQuestions();
 
         int correctAnswers = 0;
-        for (Question question : quiz.getQuestions()) {
-            String userAnswer = answers.get(question.getId());
-            if(userAnswer == null) {
-                break;
-            }
-            if(question.getCorrectOption().equals(userAnswer)) {
+        for (Map.Entry<Integer, String> entry : answers.entrySet()) {
+            Question q = quizRepository.findById(quizId)
+                    .get()
+                    .getQuestions()
+                    .stream()
+                    .filter(x -> x.getId() == entry.getKey())
+                    .findFirst()
+                    .orElse(null);
+            if (q == null) break;
+
+            if (q.getCorrectOption().equalsIgnoreCase(entry.getValue().trim())) {
                 correctAnswers++;
-            }
-            else {
+            } else {
                 break;
             }
         }
         switch (quizId){
-            case 7:
-                System.out.println("Quiz 7 IM INNNNNNN");
+            case 1:
                 if(user.getNumericalBestScore() < correctAnswers) {
-                    System.out.println("Numerical best score değişti");
                     user.setNumericalBestScore(correctAnswers);
                 }
                 break;

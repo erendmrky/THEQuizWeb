@@ -59,6 +59,28 @@
     .login-container button { width: 100%; padding: 0.75rem; margin-top: 0.5rem; border: none; border-radius: 4px; background: #8e44ad; color: #fff; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
     .login-container .footer { margin-top: 2rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 4px; font-size: 0.8rem; text-align: center; width: 100%; box-sizing: border-box; }
     .login-container .footer a { color: #9c27b0; text-decoration: none; font-weight: bold; cursor: pointer; }
+
+    @media screen and (max-width: 1920px) {
+      .line:nth-child(1) { left: 18%; }
+      .line:nth-child(2) { left: 36%; }
+      .line:nth-child(3) { left: 54%; }
+      .line:nth-child(4) { left: 72%; top: 6%; height: 88%; }
+
+      .img1 { left: 78%; top: 15%; width: 4%; }
+      .img2 { left: 80%; top: 6%; width: 4.2%; }
+      .img3 { left: 82%; top: 13%; width: 4.5%; }
+      .img4 { left: 87%; top: 7%; width: 4.2%; }
+      .img5 { left: 91%; top: 14%; width: 4%; }
+      .img7 { left: 3.5%; top: 10%; width: 38%; }
+
+      .info-text { left: 43%; top: 24.3%; width: 40%; font-size: 1.3rem; }
+      .segment-right { width: 25%; padding-top: 8%; padding-left: 3%; }
+      .login-container h2 { font-size: 1.8rem; }
+      .input-group input { font-size: 0.85rem; }
+      .img6 { width: 1.5rem; }
+      .login-container button { font-size: 0.85rem; }
+      .login-container .footer { font-size: 0.75rem; }
+    }
   </style>
 </head>
 <body>
@@ -122,82 +144,91 @@
   </div>
 
   <script>
-    document.getElementById('show-signup').addEventListener('click', () => {
-      document.getElementById('login-container').style.display = 'none';
-      document.getElementById('signup-container').style.display = 'block';
-    });
-    document.getElementById('show-login').addEventListener('click', () => {
-      document.getElementById('signup-container').style.display = 'none';
-      document.getElementById('login-container').style.display = 'block';
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- Panel toggles ---
+      document.getElementById('show-signup').addEventListener('click', () => {
+        document.getElementById('login-container').style.display  = 'none';
+        document.getElementById('signup-container').style.display = 'block';
+      });
+      document.getElementById('show-login').addEventListener('click', () => {
+        document.getElementById('signup-container').style.display = 'none';
+        document.getElementById('login-container').style.display  = 'block';
+      });
 
-    document.getElementById('toggleLoginPass').addEventListener('click', () => {
-      const f = document.getElementById('login-password');
-      f.type = f.type === 'password' ? 'text' : 'password';
-    });
-    document.getElementById('toggleSignupPass').addEventListener('click', () => {
-      ['signup-password','signup-confirm'].forEach(id => {
-        const f = document.getElementById(id);
+      // --- Password visibility toggles ---
+      document.getElementById('toggleLoginPass').addEventListener('click', () => {
+        const f = document.getElementById('login-password');
         f.type = f.type === 'password' ? 'text' : 'password';
       });
-    });
-
-    document.getElementById('login-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value.trim();
-      const password = document.getElementById('login-password').value;
-      if (!email || !password) {
-        alert('Please fill all fields');
-        return;
-      }
-      try {
-        const res = await fetch('/api/users/login', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({email, password})
+      document.getElementById('toggleSignupPass').addEventListener('click', () => {
+        ['signup-password','signup-confirm'].forEach(id => {
+          const inp = document.getElementById(id);
+          inp.type = inp.type === 'password' ? 'text' : 'password';
         });
-        const text = await res.text();
+      });
 
-        if (res.ok && text.toLowerCase().includes('success')) {
-          window.location.href = 'StajHazir.html';
+      // --- Login handler ---
+      document.getElementById('login-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const email    = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+        try {
+          const res  = await fetch('/api/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
+          if (data.success) {
+            // store for later pages
+            localStorage.setItem('quizUserId', data.userId);
+            localStorage.setItem('quizUsername', data.username || '');
+            // go to quiz landing page
+            window.location.href = 'StajHazir.html';
+          } else {
+            alert('Login failed: wrong email or password');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Network error occurred.');
         }
-      } catch (err) {
-        console.error(err);
-      }
-    });
+      });
 
-    document.getElementById('signup-form').addEventListener('submit', async e => {
-      e.preventDefault();
-      const username = document.getElementById('signup-username').value.trim();
-      const email = document.getElementById('signup-email').value.trim();
-      const password = document.getElementById('signup-password').value;
-      const cpw = document.getElementById('signup-confirm').value;
-      if (!username || !email || !password || !cpw) {
-        alert('Please fill all fields');
-        return;
-      }
-      if (password !== cpw) {
-        alert('Passwords do not match');
-        return;
-      }
-      try {
-        const res = await fetch('/api/users/register', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({email, username, password})
-        });
-        const text = await res.text();
-        if (res.ok) {
-          setTimeout(() => window.location.href = 'Signin_StajHazir.html', 1500);
-        } else {
+      // --- Sign-up handler ---
+      document.getElementById('signup-form').addEventListener('submit', async e => {
+        e.preventDefault();
+        const username = document.getElementById('signup-username').value.trim();
+        const email    = document.getElementById('signup-email').value.trim();
+        const password = document.getElementById('signup-password').value;
+        const confirm  = document.getElementById('signup-confirm').value;
+        if (!username || !email || !password || !confirm) {
+          return alert('Please fill all fields.');
         }
-      } catch (err) {
-        console.error(err);
-      }
-      alert('Account created! Please sign in.');
-      document.getElementById('signup-container').style.display = 'none';
-      document.getElementById('login-container').style.display = 'block';
+        if (password !== confirm) {
+          return alert('Passwords do not match.');
+        }
+        try {
+          const res  = await fetch('/api/users/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+          });
+          const text = await res.text();
+          if (res.ok) {
+            alert('Account created! Please sign in.');
+            // switch back to login form
+            document.getElementById('signup-container').style.display = 'none';
+            document.getElementById('login-container').style.display  = 'block';
+          } else {
+            alert('Sign-up failed: ' + text);
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Network error.');
+        }
+      });
     });
   </script>
+
 </body>
 </html>

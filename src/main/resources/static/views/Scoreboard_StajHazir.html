@@ -4,44 +4,143 @@
   <meta charset="UTF-8">
   <title>StajHazir</title>
   <style>
-    body { margin:0; padding:0; background:#000; color:#fff; font-family:Arial,sans-serif; height:100vh; position:relative; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      position: relative;
+    }
 
-    .header { background:#000; height:60px; display:flex; align-items:center; padding:0 20px; }
-    .logo { font-size:1.5rem; font-weight:bold; margin-left:300px; }
-    .logo a { color:#fff; text-decoration:none; }
-    .logo .com { color:#9b59b6; font-weight:bold; }
-    .byline { display:block; margin-top:0; margin-left:100px; font-size:0.75rem; color:#ccc; }
+    .header {
+      background: #000;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
 
-    .nav { background:rgba(255,255,255,0.1); height:40px; margin-top:20px; display:flex; align-items:center; padding:0 20px; }
-    .nav .container { display:flex; justify-content:center; gap:80px; width:100%; }
-    .dropdown { position:relative; display:inline-block; }
-    .dropdown-toggle { color:#fff; text-decoration:none; font-size:0.9rem; cursor:pointer; padding:10px 20px; }
-    .dropdown-toggle::after { content:" \25BC"; font-size:0.9rem; }
-    .dropdown-menu { display:none; position:absolute; top:100%; left:0; background:rgba(255,255,255,0.08); min-width:220px; z-index:1000; border:1px solid rgba(255,255,255,0.2); border-radius:4px; overflow:hidden; }
-    .dropdown-menu a { display:block; color:#fff; padding:4px 20px; text-decoration:none; font-size:0.9rem; border-bottom:1px solid rgba(255,255,255,0.2); transition:0.2s; white-space:nowrap; }
-    .dropdown-menu a:last-child { border-bottom:none; }
-    .dropdown:hover .dropdown-menu { display:block; }
-    .nav a { color:#fff; text-decoration:none; font-size:0.9rem; line-height:40px; }
-    .nav a:hover { color:#9b59b6; }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-left: 300px;
+    }
+
+    .logo a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .logo .com {
+      color: #9b59b6;
+      font-weight: bold;
+    }
+
+    .byline {
+      display: block;
+      margin-top: 0;
+      margin-left: 100px;
+      font-size: 0.75rem;
+      color: #ccc;
+    }
+
+    .nav {
+      background: rgba(255, 255, 255, 0.1);
+      height: 40px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav .container {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      width: 100%;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-toggle {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      padding: 10px 20px;
+    }
+
+    .dropdown-toggle::after {
+      content: " \25BC";
+      font-size: 0.9rem;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(255, 255, 255, 0.08);
+      min-width: 220px;
+      z-index: 1000;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      color: #fff;
+      padding: 4px 20px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      line-height: 40px;
+    }
+
+    .nav a:hover {
+      color: #9b59b6;
+    }
 
     .trophy-wrapper {
-      position:absolute;
-      left:200px;
-      top:300px;
-      width:400px;
-      height:auto;
+      position: absolute;
+      left: 200px;
+      top: 300px;
+      width: 400px;
+      height: auto;
     }
 
     .trophy {
-      width:100%;
-      display:block;
+      width: 100%;
+      display: block;
     }
 
     .trophy-overlay {
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      z-index:2;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
       background:
         linear-gradient(to top, black 0%, transparent 10%),
         linear-gradient(to bottom, black 0%, transparent 10%),
@@ -50,76 +149,222 @@
     }
 
     .description-panel {
-      position:absolute; top:710px; right:110px;
-      width:550px; font-size:1.6rem; line-height:1.1; text-align:left;
+      position: absolute;
+      top: 710px;
+      right: 110px;
+      width: 550px;
+      font-size: 1.6rem;
+      line-height: 1.1;
+      text-align: left;
     }
-    .description-panel .highlight-top { color:#9b59b6; text-shadow:0 0 6px #9b59b6; }
-    .description-panel .highlight-medal { color:gold; text-shadow:0 0 6px gold; }
-    .description-panel .highlight-achievement { color:#e67e22; text-shadow:0 0 6px #e67e22; }
 
-    .score-table-wrapper { position:absolute; top:210px; right:770px; width:600px; max-height:calc(100vh - 300px); overflow-y:auto; overflow-x:hidden; scrollbar-width:thin; scrollbar-color:#9b59b6 rgba(255,255,255,0.1); border-radius:8px; }
-    .score-table-wrapper::-webkit-scrollbar { width:8px; }
-    .score-table-wrapper::-webkit-scrollbar-track { background:rgba(255,255,255,0.1); border-radius:4px; }
-    .score-table-wrapper::-webkit-scrollbar-thumb { background:#9b59b6; border-radius:4px; }
-    .score-table-wrapper::-webkit-scrollbar-thumb:hover { background:#7f3f8e; }
+    .description-panel .highlight-top {
+      color: #9b59b6;
+      text-shadow: 0 0 6px #9b59b6;
+    }
 
-    .score-table { width:100%; border-collapse:collapse; background:#4f265f; border-radius:8px; overflow:hidden; display:block; }
-    .score-table thead, .score-table tbody, .score-table tr { display:table; width:100%; table-layout:fixed; }
-    .score-table th, .score-table td { border:1px solid #fff; padding:6px; text-align:center; font-size:1rem; white-space:nowrap; position:relative; color:#000; }
-    .score-table th { position:sticky; top:0; background:#4f265f; z-index:1; }
+    .description-panel .highlight-medal {
+      color: gold;
+      text-shadow: 0 0 6px gold;
+    }
 
-    .sparkle { position:absolute; width:6px; height:6px; }
-    .sparkle::before, .sparkle::after { content:''; position:absolute; background:rgba(255,255,255,0.8); }
-    .sparkle::before { width:1px; height:8px; left:2.5px; top:-1px; }
-    .sparkle::after { width:8px; height:1px; left:-1px; top:2.5px; }
+    .description-panel .highlight-achievement {
+      color: #e67e22;
+      text-shadow: 0 0 6px #e67e22;
+    }
 
-    .score-table tbody tr:nth-child(1) td { background:linear-gradient(135deg,#FFFACD 0%,#FFD700 30%,#FFC000 60%,#D4AF37 80%,#B8860B 100%); }
-    .score-table tbody tr:nth-child(2) td { background:linear-gradient(135deg,#F8F8FF 0%,#E0E0E0 25%,#C0C0C0 50%,#E8E8E8 75%,#F8F8FF 100%); }
-    .score-table tbody tr:nth-child(3) td { background:linear-gradient(135deg,#B08D57 0%,#CD7F32 30%,#DFA762 60%,#A97142 85%,#8C6239 100%); }
+    .score-table-wrapper {
+      position: absolute;
+      top: 210px;
+      right: 770px;
+      width: 600px;
+      max-height: calc(100vh - 300px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: #9b59b6 rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
 
-    .best-score-panel { position:absolute; top:240px; right:280px; text-align:center; }
-    .best-score-panel h2 { font-size:2.4rem; margin-bottom:6px; text-shadow:0 0 8px #9b59b6; }
-    .best-score-panel .score-box { padding:20px 40px; border:3px solid #9b59b6; border-radius:12px; background:rgba(155,89,182,0.3); font-size:2.4rem; font-weight:800; box-shadow:0 0 12px rgba(155,89,182,0.8); }
-    .best-score-panel .best-rank-panel { margin-top:12px; }
-    .best-score-panel .best-rank-panel h3 { font-size:1.4rem; margin-bottom:4px; text-shadow:0 0 6px #9b59b6; }
-    .best-score-panel .best-rank-panel .rank-box { padding:12px 24px; border:2px solid #9b59b6; border-radius:10px; background:rgba(155,89,182,0.2); font-size:1.8rem; font-weight:700; box-shadow:0 0 8px rgba(155,89,182,0.6); }
+    .score-table-wrapper::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .score-table-wrapper::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .score-table-wrapper::-webkit-scrollbar-thumb {
+      background: #9b59b6;
+      border-radius: 4px;
+    }
+
+    .score-table-wrapper::-webkit-scrollbar-thumb:hover {
+      background: #7f3f8e;
+    }
+
+    .score-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #7e4bb2;
+      border-radius: 8px;
+      overflow: hidden;
+      display: block;
+    }
+
+    .score-table thead,
+    .score-table tbody,
+    .score-table tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .score-table th,
+    .score-table td {
+      border: 1px solid #fff;
+      padding: 6px;
+      text-align: center;
+      font-size: 1rem;
+      white-space: nowrap;
+      position: relative;
+      color: #000;
+    }
+
+    .score-table th {
+      position: sticky;
+      top: 0;
+      background: #7e4bb2;
+      z-index: 1;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+    }
+
+    .sparkle::before,
+    .sparkle::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .sparkle::before {
+      width: 1px;
+      height: 8px;
+      left: 2.5px;
+      top: -1px;
+    }
+
+    .sparkle::after {
+      width: 8px;
+      height: 1px;
+      left: -1px;
+      top: 2.5px;
+    }
+
+    .score-table tbody tr:nth-child(1) td {
+      background: linear-gradient(135deg, #FFFACD 0%, #FFD700 30%, #FFC000 60%, #D4AF37 80%, #B8860B 100%);
+    }
+
+    .score-table tbody tr:nth-child(2) td {
+      background: linear-gradient(135deg, #F8F8FF 0%, #E0E0E0 25%, #C0C0C0 50%, #E8E8E8 75%, #F8F8FF 100%);
+    }
+
+    .score-table tbody tr:nth-child(3) td {
+      background: linear-gradient(135deg, #B08D57 0%, #CD7F32 30%, #DFA762 60%, #A97142 85%, #8C6239 100%);
+    }
+
+    .best-score-panel {
+      position: absolute;
+      top: 240px;
+      right: 280px;
+      text-align: center;
+    }
+
+    .best-score-panel h2 {
+      font-size: 2.4rem;
+      margin-bottom: 6px;
+      text-shadow: 0 0 8px #9b59b6;
+    }
+
+    .best-score-panel .score-box {
+      padding: 20px 40px;
+      border: 3px solid #9b59b6;
+      border-radius: 12px;
+      background: rgba(155, 89, 182, 0.3);
+      font-size: 2.4rem;
+      font-weight: 800;
+      box-shadow: 0 0 12px rgba(155, 89, 182, 0.8);
+    }
+
+    .best-score-panel .best-rank-panel {
+      margin-top: 12px;
+    }
+
+    .best-score-panel .best-rank-panel h3 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+      text-shadow: 0 0 6px #9b59b6;
+    }
+
+    .best-score-panel .best-rank-panel .rank-box {
+      padding: 12px 24px;
+      border: 2px solid #9b59b6;
+      border-radius: 10px;
+      background: rgba(155, 89, 182, 0.2);
+      font-size: 1.8rem;
+      font-weight: 700;
+      box-shadow: 0 0 8px rgba(155, 89, 182, 0.6);
+    }
+
+    @media screen and (max-width: 1920px) and (max-height: 1080px) {
+      .logo { margin-left: 250px; font-size: 1.2rem; }
+      .byline { margin-left: 85px; font-size: 0.6rem; }
+      .nav { height: 35.5px; margin-top: 10px; padding: 0 10px;}
+      .nav .container { gap: 60px; }
+      .trophy-wrapper { left: 200px; top: 250px; width: 350px; }
+      .description-panel { top: 620px; right: 157px; width: 450px; font-size: 1.2rem; }
+      .score-table-wrapper { right: 680px; width: 500px; }
+      .best-score-panel { right: 290px; top: 230px; }
+      .best-score-panel h2, .best-score-panel .score-box { font-size: 2rem; }
+      .best-score-panel .best-rank-panel .rank-box { font-size: 1.2rem; }
+    }
   </style>
 </head>
 <body>
-
   <div class="trophy-wrapper">
-    <img src="../images/Trophy.png" class="trophy" alt="Trophy">
+    <img src="../images/Race.png" class="trophy" alt="Trophy">
     <div class="trophy-overlay"></div>
   </div>
-
   <div class="header">
     <span class="logo"><a href="StajHazir.html">StajHazir<span class="com">.com</span></a><br><span class="byline">By THE</span></span>
   </div>
-
   <div class="nav">
     <div class="container">
       <div class="dropdown">
         <a class="dropdown-toggle" href="StajHazir.html">Aptitude Tests</a>
         <div class="dropdown-menu">
-          <a href="#verbal">Verbal Aptitude Test</a>
-          <a href="#numerical">Numerical Aptitude Test</a>
-          <a href="#nonverbal">Non-verbal Aptitude Test</a>
-          <a href="#mechanical">Mechanical Aptitude Test</a>
+          <a href="Room_StajHazir.html">Verbal Aptitude Test</a>
+          <a href="Room_StajHazir.html">Numerical Aptitude Test</a>
+          <a href="Room_StajHazir.html">Non-verbal Aptitude Test</a>
+          <a href="Room_StajHazir.html">Mechanical Aptitude Test</a>
         </div>
       </div>
-      <a href="Scoreboard_StajHazir.html">Scoreboard</a>
+      <a href="Scoreboard_StajHazir.html">Leaderboard</a>
       <a href="#contact">Contact Us</a>
       <a href="#credits">Credits</a>
       <a href="#donation">Donation</a>
     </div>
   </div>
-
   <div class="description-panel">
     The <span class="highlight-top">top 200 users</span> by score on StajHazir<span class="com">.com</span> are displayed here.
     Each season lasts six months, after which the scoreboard resets.
     At the end of each season, the top three users receive <span class="highlight-medal">medals</span> and <span class="highlight-achievement">achievements</span>.
   </div>
-
   <div class="score-table-wrapper">
     <table class="score-table">
       <thead>
@@ -128,7 +373,6 @@
       <tbody></tbody>
     </table>
   </div>
-
   <div class="best-score-panel">
     <h2>Your best score</h2>
     <div class="score-box"></div>
@@ -137,25 +381,42 @@
       <div class="rank-box"></div>
     </div>
   </div>
-
   <script>
-    const UserScore = 0.0; const UserRank = 0;
-    document.querySelector('.score-box').textContent = UserScore;
-    document.querySelector('.rank-box').textContent = UserRank;
-    const tbody = document.querySelector('.score-table tbody');
-    for(let i=1;i<=200;i++){
-      const tr=document.createElement('tr');
-      tr.innerHTML=`<td>${i}</td><td></td><td></td>`;
-      if(i<=3){
-        const cell=tr.querySelector('td');
-        const sp=document.createElement('div');
-        sp.className='sparkle';
-        sp.style.top=Math.random()*80+'%';
-        sp.style.left=Math.random()*80+'%';
-        cell.appendChild(sp);
-      }
-      tbody.appendChild(tr);
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const tbody      = document.querySelector('.score-table tbody');
+      const scoreBox   = document.querySelector('.score-box');
+      const rankBox    = document.querySelector('.rank-box');
+      // assume you saved username at login:
+      const myUsername = localStorage.getItem('username');
+
+      fetch('/api/users/leaderboard')
+              .then(res => res.json())
+              .then(list => {
+                // 1) rebuild the table
+                tbody.innerHTML = '';
+                list.forEach((u, idx) => {
+                  const tr = document.createElement('tr');
+                  tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td>${u.username}</td>
+          <td>${u.totalScore}</td>
+        `;
+                  tbody.appendChild(tr);
+                });
+
+                // 2) find *your* position
+                const myIndex = list.findIndex(u => u.username === myUsername);
+                if (myIndex !== -1) {
+                  scoreBox.textContent = list[myIndex].totalScore;
+                  rankBox.textContent  = myIndex + 1;
+                }
+              })
+              .catch(err => {
+                console.error('Failed to load leaderboard:', err);
+                tbody.innerHTML = '<tr><td colspan="3">Error loading leaderboard</td></tr>';
+              });
+    });
   </script>
+
 </body>
 </html>

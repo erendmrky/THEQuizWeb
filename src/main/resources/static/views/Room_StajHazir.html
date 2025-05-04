@@ -5,45 +5,297 @@
   <title>StajHazir</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      color: #fff;
+      margin: 0; padding: 0;
+      background: #000; color: #fff;
       font-family: Arial, sans-serif;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
     }
-
     .header {
       background: #000;
       height: 60px;
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       padding: 0 20px;
     }
-
     .logo {
       color: #fff;
       font-size: 1.5rem;
       font-weight: bold;
       margin-left: 300px;
     }
-
     .byline {
       display: block;
-      margin-top: 0px;
+      margin-top: 0;
       margin-left: 100px;
       font-size: 0.75rem;
       color: #ccc;
     }
+    .nav {
+      height: 40px;
+      margin-top: 20px;
+      padding: 0 10px;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+    }
+    #timer {
+      display: block;
+      width: 66.6667vw;
+      height: 35px;
+      margin: 20px auto 0;
+      background: #7f3f8e;
+      border-radius: 12px;
+      border: 6px solid #9b59b6;
+      box-sizing: border-box;
+    }
+    #time-tooltip {
+      position: absolute;
+      background: #ccc; color: #000;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      pointer-events: none;
+      opacity: 0; transition: opacity 0.1s;
+      white-space: nowrap; z-index: 1000;
+    }
+    .score-container {
+      text-align: center; margin: 40px auto 0;
+    }
+    .score-label {
+      font-size: 2rem; font-weight: bold; color: #fff;
+      margin-bottom: 6px;
+    }
+    .score-box {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 200px; height: 50px;
+      background: #7f3f8e; border: 4px solid #9b59b6;
+      border-radius: 12px; color: #fff; font-size: 2rem;
+    }
+    .main-content {
+      display: flex; flex-direction: row;
+      margin: 75px 0 0 105px; gap: 120px;
+    }
+    .out-question-box {
+      width: 906px; height: 612px;
+      background: #9b59b6; border-radius: 20px;
+      padding: 8px; display: flex; flex-direction: column;
+    }
+    .question-box {
+      flex: 1; background: #fff; color: #000;
+      border-radius: 16px; padding: 20px;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+    }
+    .question-text {
+      font-size: 1.4rem; max-width: 90%;
+    }
+    .question-image {
+      max-width: 90%; height: auto;
+      border-radius: 12px; margin-top: 20px;
+      display: none;
+    }
+    .answers-container {
+      display: flex; flex-direction: column;
+      justify-content: space-between; height: 627px;
+      align-items: flex-end;
+    }
+    .answer-box {
+      width: 800px; height: 135px;
+      background: #fff; border-radius: 20px;
+      border: 6px solid #9b59b6;
+      display: flex; align-items: center;
+      box-sizing: border-box; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .answer-box:hover {
+      background: #e0c7f0;
+    }
+    .answer-letter {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 2rem; font-weight: bold;
+      color: #9b59b6; margin-left: 25px;
+    }
+    .answer-content {
+      flex: 1; text-align: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 2rem; color: #9b59b6;
+    }
+    .answer-content img {
+      max-width: 90%; max-height: 90%;
+    }
 
+    /* responsive for 1920×1080 */
+    @media screen and (max-width: 1920px) {
+      .logo { margin-left: 250px; font-size: 1.2rem; }
 
+      .byline { margin-left: 85px; font-size: 0.6rem; }
+
+      .nav { height: 35.5px; margin-top: 10px; padding: 0 10px;}
+      
+      #timer {
+        width: 70vw;
+      }
+      .main-content {
+        margin: 55px auto 0 auto;
+        gap: 5vw;
+      }
+      .score-container {
+      text-align: center; margin: 15px auto 0;
+    }
+      
+      .question-box {
+      flex: 1; background: #fff; color: #000;
+      border-radius: 16px; padding: 20px;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      }
+    .out-question-box {
+      width: 750px; height: 495px;
+      background: #9b59b6; border-radius: 20px;
+      padding: 8px; display: flex; flex-direction: column;
+      }
+      .answers-container {
+      display: flex; flex-direction: column;
+      justify-content: space-between; height: 510px;
+      align-items: flex-end;
+      }
+      .answer-box {
+        width: 750px;
+        height: 110px;
+
+      }
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <span class="logo">StajHazir<span style="color:#9b59b6;">.com</span><br><span class="byline">By THE</span></span>
+    <span class="logo">
+      StajHazir<span style="color:#9b59b6;">.com</span><br>
+      <span class="byline">By THE</span>
+    </span>
   </div>
+  <div class="nav"></div>
+  <canvas id="timer"></canvas>
+  <div id="time-tooltip"></div>
+
+  <div class="score-container">
+    <div class="score-label">Your Score</div>
+    <div class="score-box">0</div>
+  </div>
+
+  <div class="main-content">
+    <div class="out-question-box">
+      <div class="question-box">
+        <div class="question-text">Buraya Soruyu Koycan</div>
+        <img class="question-image" src="" alt="Question Image">
+      </div>
+    </div>
+    <div class="answers-container">
+      <button class="answer-box">
+        <span class="answer-letter">A</span>
+        <span class="answer-content"></span>
+      </button>
+      <button class="answer-box">
+        <span class="answer-letter">B</span>
+        <span class="answer-content"></span>
+      </button>
+      <button class="answer-box">
+        <span class="answer-letter">C</span>
+        <span class="answer-content"></span>
+      </button>
+      <button class="answer-box">
+        <span class="answer-letter">D</span>
+        <span class="answer-content"></span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1) quizId & userId
+      const params   = new URLSearchParams(location.search);
+      const quizMap  = { numerical:1, verbal:2, nonverbal:3, mechanical:4 };
+      const quizId   = quizMap[ params.get('test') ];
+      const userId   = localStorage.getItem('quizUserId');
+      if (!userId) return window.location.href = 'Signin_StajHazir.html';
+
+      // 2) DOM referansları
+      const qText      = document.querySelector('.question-text');
+      const qImage     = document.querySelector('.question-image');
+      const answerBtns = Array.from(document.querySelectorAll('.answer-box'));
+      const scoreBox   = document.querySelector('.score-box');
+
+      // 3) durum
+      let questions   = [];
+      let renderOrder = [];
+      let score = 0, current = 0;
+      const userAnswers = {};  // { soruId: 'A' | 'B' | ... }
+
+      // 4) soruları al ve karıştır
+      fetch(`/api/quiz/topic/${quizId}`)
+              .then(r => r.json())
+              .then(list => {
+                questions   = list;
+                renderOrder = list.map((_,i) => i).sort(() => Math.random() - 0.5);
+                renderQuestion(0);
+              })
+              .catch(err => {
+                console.error("Failed to load questions:", err);
+                alert("Quiz yüklenemedi, lütfen tekrar deneyin.");
+              });
+
+      // 5) soruyu göster
+      function renderQuestion(i) {
+        if (i >= renderOrder.length) return finish();
+        const q = questions[ renderOrder[i] ];
+        qText.textContent = q.content;
+        if (q.imageUrl) {
+          qImage.src = q.imageUrl;
+          qImage.style.display = 'block';
+        } else {
+          qImage.style.display = 'none';
+        }
+        ['optionA','optionB','optionC','optionD'].forEach((opt, idx) => {
+          const btn    = answerBtns[idx];
+          const letter = ['A','B','C','D'][idx];
+          btn.querySelector('.answer-content').textContent = q[opt];
+          btn.onclick = () => onAnswer(letter, q.correctOption, q.id);
+        });
+        scoreBox.textContent = score;
+      }
+
+      // 6) cevap tıklanınca
+      function onAnswer(chosen, correct, questionId) {
+        userAnswers[questionId] = chosen;
+        if (chosen !== correct) {
+          return finish();
+        }
+        score++;
+        renderQuestion(++current);
+      }
+
+      // 7) bitir ve gönder
+      function finish() {
+        console.log("Final score:", score, "userAnswers:", userAnswers);
+        fetch(`/api/quiz/topic/${quizId}/submit?userId=${userId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userAnswers)    // artık doğrudan { soruId: 'A', ... }
+        })
+                .then(async res => {
+                  const text = await res.text();
+                  if (!res.ok) throw new Error(text);
+                  return parseFloat(text);
+                })
+                .then(scoreNum => {
+                  alert(`You scored ${scoreNum}!`);
+                  window.location.href = 'StajHazir.html';
+                })
+                .catch(err => {
+                  console.error("Submit error:", err);
+                  alert("Error submitting your quiz:\n" + err.message);
+                });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.quizapp.quizweb.service;
 
 import com.quizapp.quizweb.model.User;
+import com.quizapp.quizweb.observerfactory.Observer;
 import com.quizapp.quizweb.observerfactory.QuizNotifier;
 import com.quizapp.quizweb.observerfactory.UserObserver;
 import com.quizapp.quizweb.repository.UserRepository;
@@ -50,5 +51,18 @@ public class UserService {
             return user.get().getMechanicalBestScore() + user.get().getNonverbalBestScore() + user.get().getVerbalBestScore() + user.get().getNumericalBestScore();
         }
         return 0;
+    }
+
+    public String deleteUser(String email) {
+        User user = userRepository.findByEmail(email).get();
+        UserObserver userToDelete = new UserObserver(user,mailSender);
+        if (user == null) {
+            return "User Not Found";
+        }
+        else {
+            quizNotifier.removeObserver(userToDelete);
+            userRepository.delete(user);
+        }
+        return "User Deleted Successfully";
     }
 }
