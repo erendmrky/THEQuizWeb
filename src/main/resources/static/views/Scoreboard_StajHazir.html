@@ -333,6 +333,37 @@
       .best-score-panel h2, .best-score-panel .score-box { font-size: 2rem; }
       .best-score-panel .best-rank-panel .rank-box { font-size: 1.2rem; }
     }
+    #modalOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+    }
+
+    #modalBox {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      min-width: 200px;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 0 20px #9b59b6;
+    }
+
+    #modalBox h2 {
+      border-bottom: 2px solid #9b59b6;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
@@ -356,7 +387,7 @@
       </div>
       <a href="Scoreboard_StajHazir.html">Leaderboard</a>
       <a href="#contact">Contact Us</a>
-      <a href="#credits">Credits</a>
+      <a href="#credits" id="creditsLink">Credits</a>
       <a href="#donation">Donation</a>
     </div>
   </div>
@@ -381,8 +412,23 @@
       <div class="rank-box"></div>
     </div>
   </div>
+  <!-- Modal -->
+  <div id="modalOverlay">
+    <div id="modalBox">
+      <h2>Credits</h2>
+      <p>
+        Tolga Kömeç<br><br>
+        Eren Demirkaya<br><br>
+        Hossein Eskandari
+      </p>
+    </div>
+  </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const UserScore = 0.0;
+      const UserRank = 0;
+      document.querySelector('.score-box').textContent = UserScore;
+      document.querySelector('.rank-box').textContent = UserRank;
       const tbody      = document.querySelector('.score-table tbody');
       const scoreBox   = document.querySelector('.score-box');
       const rankBox    = document.querySelector('.rank-box');
@@ -415,8 +461,20 @@
                 console.error('Failed to load leaderboard:', err);
                 tbody.innerHTML = '<tr><td colspan="3">Error loading leaderboard</td></tr>';
               });
+      const creditsLink = document.getElementById("creditsLink");
+      const modalOverlay = document.getElementById("modalOverlay");
+
+      creditsLink.addEventListener("click", function(e) {
+        e.preventDefault();
+        modalOverlay.style.display = "block";
+      });
+
+      modalOverlay.addEventListener("click", function(e) {
+        if (e.target === modalOverlay) {
+          modalOverlay.style.display = "none";
+        }
+      });
     });
   </script>
-
 </body>
 </html>

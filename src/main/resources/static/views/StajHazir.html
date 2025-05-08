@@ -265,79 +265,143 @@
       }
 
       .sidebar-inner > div:nth-child(2) {
-        width: 47% !important;
+        width: 45% !important;
         left: 86vh !important;
-        top: 0vh !important; 
+        top: 0vh !important;
       }
 
       .sidebar-inner > div:nth-child(2) img {
         width: 100%;
       }
     }
+
+    /* Modal Styles */
+    #modalOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2000;
+    }
+
+    #modalBox {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      min-width: 200px;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 0 20px #9b59b6;
+    }
+
+    /* Çizgi eklenen başlık stili */
+    #modalBox h2 {
+      border-bottom: 2px solid #9b59b6;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <span class="logo">StajHazir<span style="color:#9b59b6;">.com</span><br><span class="byline">By THE</span></span>
-  </div>
-  <div class="nav">
-    <div class="container">
-      <div class="dropdown">
-        <div class="dropdown-toggle">Aptitude Tests</div>
-        <div class="dropdown-menu">
-          <a href="Room_StajHazir.html?test=verbal">Verbal Aptitude Test</a>
-          <a href="Room_StajHazir.html?test=numerical">Numerical Aptitude Test</a>
-          <a href="Room_StajHazir.html?test=nonverbal">Non-verbal Aptitude Test</a>
-          <a href="Room_StajHazir.html?test=mechanical">Mechanical Aptitude Test</a>
-        </div>
+<div class="header">
+  <span class="logo">StajHazir<span style="color:#9b59b6;">.com</span><br><span class="byline">By THE</span></span>
+</div>
+<div class="nav">
+  <div class="container">
+    <div class="dropdown">
+      <div class="dropdown-toggle">Aptitude Tests</div>
+      <div class="dropdown-menu">
+        <a href="Room_StajHazir.html?test=verbal">Verbal Aptitude Test</a>
+        <a href="Room_StajHazir.html?test=numerical">Numerical Aptitude Test</a>
+        <a href="Room_StajHazir.html?test=nonverbal">Non-verbal Aptitude Test</a>
+        <a href="Room_StajHazir.html?test=mechanical">Mechanical Aptitude Test</a>
       </div>
-      <a href="Scoreboard_StajHazir.html">Leaderboard</a>
-      <a href="#contact">Contact Us</a>
-      <a href="#credits">Credits</a>
-      <a href="#donation">Donation</a>
     </div>
+    <a href="Scoreboard_StajHazir.html">Leaderboard</a>
+    <a href="#contact">Contact Us</a>
+    <a href="#credits" id="creditsLink">Credits</a>
+    <a href="#donation">Donation</a>
   </div>
-  <div class="content">
-    <div class="sidebar">
-      <div class="sidebar-inner">
-        <div>
-          <h1><em style="color:#9b59b6;">Empower your journey to greatness!</em></h1>
-          <p>
-            Completely <strong><em style="color:#e67e22;">FREE</em></strong> and unlimited—<br>
-            <strong>More than 2,000 questions</strong> await your mastery.<br>
-            Start now and conquer your goals.
-          </p>
-        </div>
-        <div style="position: absolute; width: 50%; left: 91vh; top: 0vh;">
-          <img src="../images/Staj2.png" alt="Staj Logo" style="width: 100%; display: block;" />
-          <div style="position: absolute; inset: 0; pointer-events: none; z-index: 2;
+</div>
+<div class="content">
+  <div class="sidebar">
+    <div class="sidebar-inner">
+      <div>
+        <h1><em style="color:#9b59b6;">Empower your journey to greatness!</em></h1>
+        <p>
+          Completely <strong><em style="color:#e67e22;">FREE</em></strong> and unlimited—<br>
+          <strong>More than 2,000 questions</strong> await your mastery.<br>
+          Start now and conquer your goals.
+        </p>
+      </div>
+      <div style="position: absolute; width: 50%; left: 91vh; top: 0vh;">
+        <img src="../images/Staj2.png" alt="Staj Logo" style="width: 100%; display: block;" />
+        <div style="position: absolute; inset: 0; pointer-events: none; z-index: 2;
             background: linear-gradient(to top, black 0%, transparent 10%),
                         linear-gradient(to bottom, black 0%, transparent 10%),
                         linear-gradient(to left, black 0%, transparent 10%),
                         linear-gradient(to right, black 0%, transparent 10%);"></div>
-        </div>
       </div>
     </div>
-    <div class="main"></div>
-    <div class="tests-bar">
-      <button class="test-item" onclick="location.href='Room_StajHazir.html?test=numerical'">
-        <div class="test-icon"><img src="../images/Numerical.png" alt="Numerical"></div>
-        Numerical Tests
-      </button>
-      <button class="test-item" onclick="location.href='Room_StajHazir.html?test=verbal'">
-        <div class="test-icon"><img src="../images/Verbal.png" alt="Verbal"></div>
-        Verbal Tests
-      </button>
-      <button class="test-item" onclick="location.href='Room_StajHazir.html?test=nonverbal'">
-        <div class="test-icon"><img src="../images/Non-verbal.png" alt="Non-Verbal"></div>
-        Non-verbal Tests
-      </button>
-      <button class="test-item" onclick="location.href='Room_StajHazir.html?test=mechanical'">
-        <div class="test-icon"><img src="../images/Mech.png" alt="Mechanical"></div>
-        Mechanical Tests
-      </button>
-    </div>
   </div>
-  <div class="bottom-bar"></div>
+  <div class="main"></div>
+  <div class="tests-bar">
+    <button class="test-item" onclick="location.href='Room_StajHazir.html?test=numerical'">
+      <div class="test-icon"><img src="../images/Numerical.png" alt="Numerical"></div>
+      Numerical Tests
+    </button>
+    <button class="test-item" onclick="location.href='Room_StajHazir.html?test=verbal'">
+      <div class="test-icon"><img src="../images/Verbal.png" alt="Verbal"></div>
+      Verbal Tests
+    </button>
+    <button class="test-item" onclick="location.href='Room_StajHazir.html?test=nonverbal'">
+      <div class="test-icon"><img src="../images/Non-verbal.png" alt="Non-Verbal"></div>
+      Non-verbal Tests
+    </button>
+    <button class="test-item" onclick="location.href='Room_StajHazir.html?test=mechanical'">
+      <div class="test-icon"><img src="../images/Mech.png" alt="Mechanical"></div>
+      Mechanical Tests
+    </button>
+  </div>
+</div>
+<div class="bottom-bar"></div>
+
+<!-- Modal -->
+<div id="modalOverlay">
+  <div id="modalBox">
+    <h2>Credits</h2>
+    <p>
+      Tolga Kömeç<br><br>
+      Eren Demirkaya<br><br>
+      Hossein Eskandari
+    </p>
+  </div>
+</div>
+
+<!-- Script -->
+<script>
+  const creditsLink = document.getElementById("creditsLink");
+  const modalOverlay = document.getElementById("modalOverlay");
+
+  creditsLink.addEventListener("click", function(e) {
+    e.preventDefault();
+    modalOverlay.style.display = "block";
+  });
+
+  modalOverlay.addEventListener("click", function(e) {
+    if (e.target === modalOverlay) {
+      modalOverlay.style.display = "none";
+    }
+  });
+
+</script>
 </body>
 </html>
