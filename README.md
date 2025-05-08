@@ -1,0 +1,2 @@
+This project presents **StajHazir.com**, a Spring Boot-based quiz game platform that helps users prepare for aptitude tests. The system offers four main quiz categories — Verbal, Non-verbal, Numerical, and Mechanical — to evaluate different cognitive skills. Users can create an account, log in, take quizzes, and track their performance on a global scoreboard that ranks the top 200 players. More than 2,000 questions are available, and the system resets the rankings every six months.
+Its a term project for SEN3006 Software Architecture.
