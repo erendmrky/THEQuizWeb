@@ -5,11 +5,9 @@ import com.quizapp.quizweb.model.Quiz;
 import com.quizapp.quizweb.model.User;
 import com.quizapp.quizweb.observerfactory.QuizFactory;
 import com.quizapp.quizweb.observerfactory.QuizNotifier;
-import com.quizapp.quizweb.observerfactory.UserObserver;
 import com.quizapp.quizweb.repository.QuizRepository;
 import com.quizapp.quizweb.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,19 +22,12 @@ public class QuizService {
     private QuizNotifier quizNotifier;
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
     private UserRepository userRepository;
 
     public String createQuiz(String topicName, List <Question> questions) {
         Quiz quiz = QuizFactory.createQuiz(topicName,questions);
         quizRepository.save(quiz);
-        List<User> allUsers = userRepository.findAll();
-        for (User user : allUsers) {
-            UserObserver observer = new UserObserver(user,mailSender);
-            observer.update(topicName);
-        }
+        quizNotifier.notifyObservers(quiz.getTopic());
         return "Quiz created and users have been notified!";
     }
 
@@ -48,12 +39,7 @@ public class QuizService {
         }
         quiz.getQuestions().addAll(questions);
         quizRepository.save(quiz);
-
-        List<User> allUsers = userRepository.findAll();
-        for (User user : allUsers) {
-            UserObserver observer = new UserObserver(user,mailSender);
-            quizNotifier.notifyObservers(quiz.getTopic());
-        }
+        quizNotifier.notifyObservers(quiz.getTopic());
         return "Questions created for existing topic and users have been notified!";
     }
 
