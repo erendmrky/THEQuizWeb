@@ -264,12 +264,13 @@
       }
 
       // 6) cevap tıklanınca
-      function onAnswer(chosen, correct, questionId) {
+      function onAnswer(chosen, correct, questionId,scoreNum) {
         userAnswers[questionId] = chosen;
         if (chosen !== correct) {
           return finish();
         }
         score++;
+        scoreNum++;
         renderQuestion(++current);
       }
 
